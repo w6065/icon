@@ -73,7 +73,7 @@ public class UserController {
         //获取验证码
         String code = map.get("code").toString();
         //从Session中获取保存的验证码
-//        Object codeInSession = session.getAttribute(phone);
+//      Object codeInSession = session.getAttribute(phone);
 
         //从Redis中获取缓存的验证码
         Object codeInSession = redisTemplate.opsForValue().get(phone);
