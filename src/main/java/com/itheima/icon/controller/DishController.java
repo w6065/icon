@@ -159,13 +159,17 @@ public class DishController {
      * @return
      */
     @DeleteMapping
-    public R<String> deleteIds(Long[] ids){
-        for(Long id:ids){
-           dishService.removeById(id);
-            Set keys = redisTemplate.keys("dish_*");
-            redisTemplate.delete(keys);
-        }
-        return R.success("状态修改成功");
+    public R<String> deleteIds(@RequestParam List<Long> ids){
+        dishService.removeDish(ids);
+        return R.success("删除成功！");
+
+
+//        for(Long id:ids){
+//           dishService.removeById(id);
+//            Set keys = redisTemplate.keys("dish_*");
+//            redisTemplate.delete(keys);
+//        }
+//        return R.success("状态修改成功");
     }
 
     /**

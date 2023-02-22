@@ -2,6 +2,7 @@ package com.itheima.icon.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.itheima.icon.common.CustomException;
 import com.itheima.icon.dto.DishDto;
 import com.itheima.icon.entity.Dish;
 import com.itheima.icon.entity.DishFlavor;
@@ -95,6 +96,23 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         dishFlavorService.saveBatch(flavors);
     }
 
+    @Override
+    public void removeDish(List<Long> ids) {
+        //查询菜品状态，确定能否可用删除
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(Dish::getId,ids);
+        queryWrapper.eq(Dish::getStatus,1);
+
+        int count = this.count(queryWrapper);
+        if (count > 0){
+            //如果不能删除，抛出一个异常
+            throw new CustomException("菜品正在售卖中，不能删除");
+        }
+        //如果可以删除
+        this.removeByIds(ids);
+
+
+    }
 
 
 }

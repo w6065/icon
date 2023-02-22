@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ServletComponentScan
 @EnableTransactionManagement
 @EnableCaching  //开启Spring Cache注解方式缓存功能
-public class ReggieApplication {
+public class IconApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ReggieApplication.class, args);
+        SpringApplication.run(IconApplication.class, args);
         log.info("项目启动成功！~~~");
     }
 

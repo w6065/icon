@@ -1,6 +1,7 @@
 package com.itheima.icon.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.icon.common.BaseContext;
 import com.itheima.icon.common.R;
@@ -12,8 +13,10 @@ import com.itheima.icon.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,5 +93,63 @@ public class OrderController {
 
         return R.success(pageInfo);
 
+    }
+
+
+
+    @PutMapping
+    public R<String> send(@RequestBody Orders orders){
+        Long id = orders.getId();
+        Integer status = orders.getStatus();
+        LambdaQueryWrapper<Orders> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.eq(Orders::getId,id);
+        Orders one = orderService.getOne(queryWrapper);
+        one.setStatus(status);
+        orderService.updateById(one);
+        return R.success("派送成功");
+    }
+
+
+    /**
+     * 再来一单
+     * 目的是直接跳转到首页，避免误点直接下单成功。
+     * 注释的是直接下单成功，并且跳转到首页。
+     * @param order1
+     * @return
+     */
+    @Transactional
+    @PostMapping("/again")
+    public R<String> again(@RequestBody Orders order1){
+//        //取得orderId
+//        Long id = order1.getId();
+//        Orders orders = orderService.getById(id);
+//        //设置订单号码
+//        long orderId = IdWorker.getId();
+//        orders.setId(orderId);
+//        //设置订单号码
+//        String number = String.valueOf(IdWorker.getId());
+//        orders.setNumber(number);
+//        //设置下单时间
+//        orders.setOrderTime(LocalDateTime.now());
+//        orders.setCheckoutTime(LocalDateTime.now());
+//        orders.setStatus(2);
+//        //向订单表中插入一条数据
+//        orderService.save(orders);
+//        //修改订单明细表
+//        LambdaQueryWrapper<OrderDetail> queryWrapper=new LambdaQueryWrapper<>();
+//        queryWrapper.eq(OrderDetail::getOrderId,id);
+//        List<OrderDetail> list = orderDetailService.list(queryWrapper);
+//        list.stream().map((item)->{
+//            //订单明细表id
+//            long detailId = IdWorker.getId();
+//            //设置订单号码
+//            item.setOrderId(orderId);
+//            item.setId(detailId);
+//            return item;
+//        }).collect(Collectors.toList());
+//
+//        //向订单明细表中插入多条数据
+//        orderDetailService.saveBatch(list);
+        return R.success("再来一单");
     }
 }
