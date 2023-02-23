@@ -97,6 +97,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     }
 
     @Override
+    @Transactional
     public void removeDish(List<Long> ids) {
         //查询菜品状态，确定能否可用删除
         LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
