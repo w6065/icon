@@ -20,10 +20,5 @@ icon外卖，练手项目
 2. 在主库中安装Nginx:部署前端项目、配置反向代理 Mysql，Redis:缓存中间件
 3. 在从库中安装jdk:运行Java项目，git:版本控制工具，maven:项目构建工具，jar: Spring Boot项目打成jar包基于内置Tomcat运行，Mysql:主从复制结构中的从库
 
-#### 参与贡献
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
 
